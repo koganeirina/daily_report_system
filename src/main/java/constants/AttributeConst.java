@@ -1,7 +1,9 @@
 package constants;
 
-//画面の項目値等を定義するEnumクラス
-
+/**
+ * 画面の項目値等を定義するEnumクラス
+ *
+ */
 public enum AttributeConst {
 
     //フラッシュメッセージ
@@ -16,7 +18,7 @@ public enum AttributeConst {
     ERR("errors"),
 
     //ログイン中の従業員
-   LOGIN_EMP("login_Employee"),
+    LOGIN_EMP("login_employee"),
 
     //ログイン画面
     LOGIN_ERR("loginError"),
@@ -52,13 +54,13 @@ public enum AttributeConst {
     private final Integer i;
 
     private AttributeConst(final String text) {
-        this.text=text;
-        this.i=null;
+        this.text = text;
+        this.i = null;
     }
 
     private AttributeConst(final Integer i) {
-        this.text=null;
-        this.i=i;
+        this.text = null;
+        this.i = i;
     }
 
     public String getValue() {
@@ -68,4 +70,5 @@ public enum AttributeConst {
     public Integer getIntegerValue() {
         return this.i;
     }
+
 }

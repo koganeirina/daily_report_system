@@ -1,17 +1,19 @@
 package constants;
+
 /**
  * DB関連の項目値を定義するインターフェース
  * ※インターフェイスに定義した変数は public static final 修飾子がついているとみなされる
  */
 public interface JpaConst {
-  //persistence-unit名
-    String PERSISTENCE_UNIT_NAME="daily_report_system";
+
+    //persistence-unit名
+    String PERSISTENCE_UNIT_NAME = "daily_report_system";
 
     //データ取得件数の最大値
-    int ROW_PER_PAGE=15; ////1ページに表示するレコードの数
+    int ROW_PER_PAGE = 15; //1ページに表示するレコードの数
 
     //従業員テーブル
-    String TABLE_EMP="employees"; //テーブル名
+    String TABLE_EMP = "employees"; //テーブル名
     //従業員テーブルカラム
     String EMP_COL_ID = "id"; //id
     String EMP_COL_CODE = "code"; //社員番号
@@ -27,7 +29,7 @@ public interface JpaConst {
     int EMP_DEL_TRUE = 1; //削除フラグON(削除済み)
     int EMP_DEL_FALSE = 0; //削除フラグOFF(現役)
 
-  //日報テーブル
+    //日報テーブル
     String TABLE_REP = "reports"; //テーブル名
     //日報テーブルカラム
     String REP_COL_ID = "id"; //id
@@ -38,7 +40,7 @@ public interface JpaConst {
     String REP_COL_CREATED_AT = "created_at"; //登録日時
     String REP_COL_UPDATED_AT = "updated_at"; //更新日時
 
-  //Entity名
+    //Entity名
     String ENTITY_EMP = "employee"; //従業員
     String ENTITY_REP = "report"; //日報
 
@@ -47,7 +49,7 @@ public interface JpaConst {
     String JPQL_PARM_PASSWORD = "password"; //パスワード
     String JPQL_PARM_EMPLOYEE = "employee"; //従業員
 
-  //NamedQueryの nameとquery
+    //NamedQueryの nameとquery
     //全ての従業員をidの降順に取得する
     String Q_EMP_GET_ALL = ENTITY_EMP + ".getAll"; //name
     String Q_EMP_GET_ALL_DEF = "SELECT e FROM Employee AS e ORDER BY e.id DESC"; //query
@@ -72,4 +74,5 @@ public interface JpaConst {
     //指定した従業員が作成した日報の件数を取得する
     String Q_REP_COUNT_ALL_MINE = ENTITY_REP + ".countAllMine";
     String Q_REP_COUNT_ALL_MINE_DEF = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :" + JPQL_PARM_EMPLOYEE;
+
 }
