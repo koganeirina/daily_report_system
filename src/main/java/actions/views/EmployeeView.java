@@ -16,14 +16,17 @@ import lombok.Setter;
 @NoArgsConstructor //引数なしコンストラクタを自動生成する(Lombok)
 @AllArgsConstructor //全てのクラスフィールドを引数にもつ引数ありコンストラクタを自動生成する(Lombok)
 public class EmployeeView {
+
     /**
      * id
      */
     private Integer id;
+
     /**
      * 社員番号
      */
     private String code;
+
     /**
      * 氏名
      */
