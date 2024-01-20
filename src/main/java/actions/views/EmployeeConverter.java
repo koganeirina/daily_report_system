@@ -29,7 +29,9 @@ public class EmployeeConverter {
                         ? null
                         : ev.getAdminFlag() == AttributeConst.ROLE_ADMIN.getIntegerValue()
                                 ? JpaConst.ROLE_ADMIN
-                                : JpaConst.ROLE_GENERAL,
+                                : ev.getAdminFlag() == AttributeConst.ROLE_GENERAL.getIntegerValue()
+                                ? JpaConst.ROLE_GENERAL
+                                : JpaConst.ROLE_MANAGER, //【追記】
                 ev.getCreatedAt(),
                 ev.getUpdatedAt(),
                 ev.getDeleteFlag() == null
@@ -59,7 +61,9 @@ public class EmployeeConverter {
                         ? null
                         : e.getAdminFlag() == JpaConst.ROLE_ADMIN
                                 ? AttributeConst.ROLE_ADMIN.getIntegerValue()
-                                : AttributeConst.ROLE_GENERAL.getIntegerValue(),
+                                : e.getAdminFlag() == JpaConst.ROLE_GENERAL
+                                ? AttributeConst.ROLE_GENERAL.getIntegerValue()
+                                : AttributeConst.ROLE_MANAGER.getIntegerValue(),
                 e.getCreatedAt(),
                 e.getUpdatedAt(),
                 e.getDeleteFlag() == null

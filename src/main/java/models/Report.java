@@ -38,7 +38,13 @@ import lombok.Setter;
             query = JpaConst.Q_REP_GET_ALL_MINE_DEF),
     @NamedQuery(
             name = JpaConst.Q_REP_COUNT_ALL_MINE,
-            query = JpaConst.Q_REP_COUNT_ALL_MINE_DEF)
+            query = JpaConst.Q_REP_COUNT_ALL_MINE_DEF),
+    @NamedQuery(
+            name=JpaConst.Q_REP_GET_ALL_UNAPPROVED,
+            query=JpaConst.Q_REP_GET_ALL_UNAPPROVED_DEF),
+    @NamedQuery(
+            name=JpaConst.Q_REP_COUNT_ALL_UNAPPROVED,
+            query=JpaConst.Q_REP_COUNT_ALL_UNAPPROVED_DEF)
 })
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
@@ -94,4 +100,15 @@ public class Report {
     @Column(name = JpaConst.REP_COL_UPDATED_AT, nullable = false)
     private LocalDateTime updatedAt;
 
+    /**
+     * 承認状況
+     */
+    @Column(name=JpaConst.REP_COL_APPROVAL_FLAG , nullable=false)
+    private int approval;
+
+    /**
+     * コメント
+     */
+    @Column(name=JpaConst.REP_COL_COMMENT,nullable=true)
+    private String comment;
 }
