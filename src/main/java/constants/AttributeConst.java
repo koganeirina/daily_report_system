@@ -36,6 +36,7 @@ public enum AttributeConst {
     //管理者フラグ
     ROLE_ADMIN(1),
     ROLE_GENERAL(0),
+    ROLE_MANAGER(2), //【追記】マネージャー
 
     //削除フラグ
     DEL_FLAG_TRUE(1),
@@ -48,7 +49,13 @@ public enum AttributeConst {
     REP_ID("id"),
     REP_DATE("report_date"),
     REP_TITLE("title"),
-    REP_CONTENT("content_msg");
+    REP_CONTENT("content_msg"),
+    REP_COMMENT("comment"), //【追記】コメント
+
+    //【追記】承認状況
+    UNAPPROVED(0),
+    APPROVED(1),
+    REMAND(2);
 
     private final String text;
     private final Integer i;

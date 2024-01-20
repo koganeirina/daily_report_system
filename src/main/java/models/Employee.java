@@ -70,7 +70,7 @@ public class Employee {
     private String password;
 
     /**
-     * 管理者権限があるかどうか（一般：0、管理者：1）
+     * 管理者権限があるかどうか（一般：0、管理者：1、マネージャー：2）
      */
     @Column(name=JpaConst.EMP_COL_ADMIN_FLAG,nullable=false)
     private Integer adminFlag;

@@ -26,6 +26,7 @@ public interface JpaConst {
 
     int ROLE_ADMIN = 1; //管理者権限ON(管理者)
     int ROLE_GENERAL = 0; //管理者権限OFF(一般)
+    int ROLE_MANAGER = 2; //【追記】マネージャー権限
     int EMP_DEL_TRUE = 1; //削除フラグON(削除済み)
     int EMP_DEL_FALSE = 0; //削除フラグOFF(現役)
 
@@ -39,6 +40,12 @@ public interface JpaConst {
     String REP_COL_CONTENT = "content"; //日報の内容
     String REP_COL_CREATED_AT = "created_at"; //登録日時
     String REP_COL_UPDATED_AT = "updated_at"; //更新日時
+    String REP_COL_COMMENT = "comment"; //【追記】コメント
+    String REP_COL_APPROVAL_FLAG = "approval_flag"; //【追記】承認フラグ
+
+    int UNAPPROVED = 0; //【追記】未承認
+    int APPROVED = 1; //【追記】承認済み
+    int REMAND = 2; //【追記】差し戻し
 
     //Entity名
     String ENTITY_EMP = "employee"; //従業員
@@ -58,7 +65,8 @@ public interface JpaConst {
     String Q_EMP_COUNT_DEF = "SELECT COUNT(e) FROM Employee AS e";
     //社員番号とハッシュ化済パスワードを条件に未削除の従業員を取得する
     String Q_EMP_GET_BY_CODE_AND_PASS = ENTITY_EMP + ".getByCodeAndPass";
-    String Q_EMP_GET_BY_CODE_AND_PASS_DEF = "SELECT e FROM Employee AS e WHERE e.deleteFlag = 0 AND e.code = :" + JPQL_PARM_CODE + " AND e.password = :" + JPQL_PARM_PASSWORD;
+    String Q_EMP_GET_BY_CODE_AND_PASS_DEF = "SELECT e FROM Employee AS e WHERE e.deleteFlag = 0 AND e.code = :"
+            + JPQL_PARM_CODE + " AND e.password = :" + JPQL_PARM_PASSWORD;
     //指定した社員番号を保持する従業員の件数を取得する
     String Q_EMP_COUNT_REGISTERED_BY_CODE = ENTITY_EMP + ".countRegisteredByCode";
     String Q_EMP_COUNT_REGISTERED_BY_CODE_DEF = "SELECT COUNT(e) FROM Employee AS e WHERE e.code = :" + JPQL_PARM_CODE;
@@ -70,9 +78,17 @@ public interface JpaConst {
     String Q_REP_COUNT_DEF = "SELECT COUNT(r) FROM Report AS r";
     //指定した従業員が作成した日報を全件idの降順で取得する
     String Q_REP_GET_ALL_MINE = ENTITY_REP + ".getAllMine";
-    String Q_REP_GET_ALL_MINE_DEF = "SELECT r FROM Report AS r WHERE r.employee = :" + JPQL_PARM_EMPLOYEE + " ORDER BY r.id DESC";
+    String Q_REP_GET_ALL_MINE_DEF = "SELECT r FROM Report AS r WHERE r.employee = :" + JPQL_PARM_EMPLOYEE
+            + " ORDER BY r.id DESC";
     //指定した従業員が作成した日報の件数を取得する
     String Q_REP_COUNT_ALL_MINE = ENTITY_REP + ".countAllMine";
     String Q_REP_COUNT_ALL_MINE_DEF = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :" + JPQL_PARM_EMPLOYEE;
-
+    //【追記】未承認の日報を全件idの降順で取得する
+    String Q_REP_GET_ALL_UNAPPROVED = ENTITY_REP + ".getAllUnapproved";
+    String Q_REP_GET_ALL_UNAPPROVED_DEF = "SELECT r FROM Report AS r WHERE r." + REP_COL_APPROVAL_FLAG + "="
+            + UNAPPROVED + "ORDER BY r.id DESC";
+    //【追記】未承認の日報の件数を取得する
+    String Q_REP_COUNT_ALL_UNAPPROVED = ENTITY_REP + "countAllUnapproved";
+    String Q_REP_COUNT_ALL_UNAPPROVED_DEF = "SELECT COUNT(r) FROM Report AS r WHERE r." + REP_COL_APPROVAL_FLAG + "="
+            + UNAPPROVED;
 }
