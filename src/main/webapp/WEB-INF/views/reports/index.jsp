@@ -1,14 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="constants.ForwardConst" %>
-<%@ page import="constants.AttributeConst" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="constants.ForwardConst"%>
+<%@ page import="constants.AttributeConst"%>
 
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
-<c:set var="commApp" value="${ForwardConst.CMD_APPROVE.getValue()}"/>
+<c:set var="commApp" value="${ForwardConst.CMD_APPROVE.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -17,11 +18,12 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        ${sessionScope.login_employee.adminFlag}
-        ${AttributeConst.ROLE_MANAGER}
-        <h2>日報　一覧  <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_MANAGER.getIntegerValue()}">
-                        <a href="<c:url value='?action=${actRep}&command=${commApp}' />">未承認一覧</a>&nbsp;
-                    </c:if></h2>
+        <h2>
+            日報 一覧　　
+                <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_MANAGER.getIntegerValue()}">
+                    <a href="<c:url value='?action=${actRep}&command=${commApp}' />"><span class="unapproved">未承認一覧</span></a>&nbsp;
+                </c:if>
+        </h2>
         <table id="report_list">
             <tbody>
                 <tr>
@@ -29,19 +31,25 @@
                     <th class="report_date">日付</th>
                     <th class="report_title">タイトル</th>
                     <th class="report_action">操作</th>
-                    <c:if test="${adminFlag}=2">
-                    <th class="report_approval">承認状況</th>
+                    <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_MANAGER.getIntegerValue()}">
+                        <th class="report_approval">承認状況</th>
                     </c:if>
                 </tr>
                 <c:forEach var="report" items="${reports}" varStatus="status">
-                    <fmt:parseDate value="${report.reportDate}" pattern="yyyy-MM-dd" var="reportDay" type="date" />
+                    <fmt:parseDate value="${report.reportDate}" pattern="yyyy-MM-dd"
+                        var="reportDay" type="date" />
 
                     <tr class="row${status.count % 2}">
-                        <td class="report_name"><c:out value="${report.employee.name}" /></td>
-                        <td class="report_date"><fmt:formatDate value='${reportDay}' pattern='yyyy-MM-dd' /></td>
+                        <td class="report_name">
+                            <c:out value="${report.employee.name}" />
+                        </td>
+                        <td class="report_date">
+                            <fmt:formatDate value='${reportDay}' pattern='yyyy-MM-dd' />
+                        </td>
                         <td class="report_title">${report.title}</td>
-                        <td class="report_action"><a href="<c:url value='?action=${actRep}&command=${commShow}&id=${report.id}' />">詳細を見る</a></td>
-                        <c:if test="${adminFlag}=2">
+                        <td class="report_action">
+                            <a href="<c:url value='?action=${actRep}&command=${commShow}&id=${report.id}' />">詳細を見る</a></td>
+                        <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_MANAGER.getIntegerValue()}">
                         <td class="report_approval">
                             <c:choose>
                             <c:when test="${report.approvalFlag}=2">差し戻し</c:when>
@@ -61,18 +69,23 @@
 
         <div id="pagination">
             （全 ${reports_count} 件）<br />
-            <c:forEach var="i" begin="1" end="${((reports_count - 1) / maxRow) + 1}" step="1">
+            <c:forEach var="i" begin="1"
+                end="${((reports_count - 1) / maxRow) + 1}" step="1">
                 <c:choose>
                     <c:when test="${i == page}">
                         <c:out value="${i}" />&nbsp;
                     </c:when>
                     <c:otherwise>
-                        <a href="<c:url value='?action=${actRep}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
+                        <a
+                            href="<c:url value='?action=${actRep}&command=${commIdx}&page=${i}' />"><c:out
+                                value="${i}" /></a>&nbsp;
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
         </div>
-        <p><a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規日報の登録</a></p>
+        <p>
+            <a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規日報の登録</a>
+        </p>
 
     </c:param>
 </c:import>
