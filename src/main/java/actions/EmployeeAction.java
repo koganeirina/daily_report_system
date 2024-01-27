@@ -274,17 +274,19 @@ public class EmployeeAction extends ActionBase {
         //セッションからログイン中の従業員情報を取得
         EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
-        //管理者でなければエラー画面を表示
+        //管理者でなければエラー画面を表示(【追記】かつマネージャーの場合)
         if (ev.getAdminFlag() != AttributeConst.ROLE_ADMIN.getIntegerValue()) {
+            if (ev.getAdminFlag() != AttributeConst.ROLE_MANAGER.getIntegerValue()) {
 
-            forward(ForwardConst.FW_ERR_UNKNOWN);
-            return false;
+                forward(ForwardConst.FW_ERR_UNKNOWN);
+                return false;
 
+            } else {
+
+                return true;
+            }
         } else {
-
             return true;
         }
-
     }
-
 }

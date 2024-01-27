@@ -25,7 +25,7 @@ public class ReportConverter {
                 rv.getContent(),
                 rv.getCreatedAt(),
                 rv.getUpdatedAt(),
-                rv.getApproval(),
+                rv.getApprovalFlag(),
                 rv.getComment());
     }
 
@@ -48,7 +48,7 @@ public class ReportConverter {
                 r.getContent(),
                 r.getCreatedAt(),
                 r.getUpdatedAt(),
-                r.getApproval(),
+                r.getApprovalFlag(),
                 r.getComment());
     }
 

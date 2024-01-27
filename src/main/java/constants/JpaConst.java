@@ -85,10 +85,10 @@ public interface JpaConst {
     String Q_REP_COUNT_ALL_MINE_DEF = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :" + JPQL_PARM_EMPLOYEE;
     //【追記】未承認の日報を全件idの降順で取得する
     String Q_REP_GET_ALL_UNAPPROVED = ENTITY_REP + ".getAllUnapproved";
-    String Q_REP_GET_ALL_UNAPPROVED_DEF = "SELECT r FROM Report AS r WHERE r." + REP_COL_APPROVAL_FLAG + "="
-            + UNAPPROVED + "ORDER BY r.id DESC";
+    String Q_REP_GET_ALL_UNAPPROVED_DEF = "SELECT r FROM Report AS r WHERE r." + "approvalFlag" + "="
+            + UNAPPROVED + " ORDER BY r.id DESC";
     //【追記】未承認の日報の件数を取得する
     String Q_REP_COUNT_ALL_UNAPPROVED = ENTITY_REP + "countAllUnapproved";
-    String Q_REP_COUNT_ALL_UNAPPROVED_DEF = "SELECT COUNT(r) FROM Report AS r WHERE r." + REP_COL_APPROVAL_FLAG + "="
+    String Q_REP_COUNT_ALL_UNAPPROVED_DEF = "SELECT COUNT(r) FROM Report AS r WHERE r." + "approvalFlag" + "="
             + UNAPPROVED;
 }

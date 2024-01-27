@@ -56,6 +56,8 @@ public class TopAction extends ActionBase {
         putRequestScope(AttributeConst.REP_COUNT, myReportsCount); //ログイン中の従業員が作成した日報の数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
+        putRequestScope(AttributeConst.EMP_ADMIN_FLG,loginEmployee.getAdminFlag()); //【追記】ログイン中の従業員の管理者フラグ
+
 
         //↑ここまで追記
 

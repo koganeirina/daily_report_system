@@ -50,6 +50,7 @@ public enum AttributeConst {
     REP_DATE("report_date"),
     REP_TITLE("title"),
     REP_CONTENT("content_msg"),
+    REP_APPROVAL_FLAG("approval_flag"),//【追記】承認フラグ
     REP_COMMENT("comment"), //【追記】コメント
 
     //【追記】承認状況

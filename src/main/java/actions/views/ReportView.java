@@ -56,7 +56,7 @@ public class ReportView {
     /**
      * 承認状況
      */
-    private int approval;
+    private int approvalFlag;
 
     /**
      * コメント

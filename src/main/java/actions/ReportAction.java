@@ -112,7 +112,10 @@ public class ReportAction extends ActionBase {
                     getRequestParam(AttributeConst.REP_TITLE),
                     getRequestParam(AttributeConst.REP_CONTENT),
                     null,
-                    null);
+                    null,
+                    AttributeConst.UNAPPROVED.getIntegerValue(), //【追記】
+                    null
+                    );
 
             //日報情報登録
             List<String> errors = service.create(rv);
@@ -205,6 +208,7 @@ public class ReportAction extends ActionBase {
             rv.setReportDate(toLocalDate(getRequestParam(AttributeConst.REP_DATE)));
             rv.setTitle(getRequestParam(AttributeConst.REP_TITLE));
             rv.setContent(getRequestParam(AttributeConst.REP_CONTENT));
+            rv.setApprovalFlag(Integer.parseInt(getRequestParam(AttributeConst.REP_APPROVAL_FLAG))); //【追記】
 
             //日報データを更新する
             List<String> errors = service.update(rv);
@@ -229,5 +233,14 @@ public class ReportAction extends ActionBase {
 
             }
         }
+    }
+
+    /**
+     * 未承認日報一覧を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void approve() throws ServletException,IOException{
+
     }
 }

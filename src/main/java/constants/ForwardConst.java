@@ -26,8 +26,8 @@ public enum ForwardConst {
     CMD_EDIT("edit"),
     CMD_UPDATE("update"),
     CMD_DESTROY("destroy"),
-    CMD_UNAPPROVED("unapproved"), //【追記】未承認日報一覧
-    CMD_SHOW_UNAPPROVED("showUnapproved"), //【追記】未承認日報詳細
+    CMD_APPROVE("approve"), //【追記】未承認日報一覧を表示するメソッド
+    CMD_SHOW_APPROVE("showApprove"), //【追記】未承認日報詳細を表示するメソッド
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),

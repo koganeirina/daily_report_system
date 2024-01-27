@@ -103,8 +103,8 @@ public class Report {
     /**
      * 承認状況
      */
-    @Column(name=JpaConst.REP_COL_APPROVAL_FLAG , nullable=false)
-    private int approval;
+    @Column(name=JpaConst.REP_COL_APPROVAL_FLAG, nullable=false)
+    private int approvalFlag;
 
     /**
      * コメント
