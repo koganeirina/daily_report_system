@@ -41,8 +41,8 @@ public enum ForwardConst {
     FW_REP_SHOW("reports/show"),
     FW_REP_NEW("reports/new"),
     FW_REP_EDIT("reports/edit"),
-    FW_REP_UNAPPROVED("reports/unapproved"), //【追記】未承認日報一覧
-    FW_REP_SHOW_UNAPPROVED("reports/showUnapproved"); //【追記】未承認日報詳細
+    FW_REP_UNAPPROVED("reports/unappIndex"), //【追記】未承認日報一覧
+    FW_REP_SHOW_UNAPPROVED("reports/showUnapp"); //【追記】未承認日報詳細
 
     /**
      * 文字列

@@ -153,5 +153,18 @@ public class ReportService extends ServiceBase {
         em.getTransaction().commit();
 
     }
+    /**
+     * 【追記】指定されたページ数の一覧画面に表示する未承認日報データを取得し、ReportViewのリストで返却する
+     * @param page ページ数
+     * @return 一覧画面に表示する未承認データのリスト
+     */
+    public List<ReportView> getAllUnapprovedPerPage(int page) {
+
+        List<Report> reports = em.createNamedQuery(JpaConst.Q_REP_GET_ALL_UNAPPROVED, Report.class)
+                .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
+                .setMaxResults(JpaConst.ROW_PER_PAGE)
+                .getResultList();
+        return ReportConverter.toViewList(reports);
+    }
 
 }

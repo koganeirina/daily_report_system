@@ -21,7 +21,7 @@
         <h2>
             日報 一覧　　
                 <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_MANAGER.getIntegerValue()}">
-                    <a href="<c:url value='?action=${actRep}&command=${commApp}' />"><span class="unapproved">未承認一覧</span></a>&nbsp;
+                    <a href="<c:url value='?action=${actRep}&command=${commApp}' />"><span class="unapproved">未承認一覧</span></a>
                 </c:if>
         </h2>
         <table id="report_list">
