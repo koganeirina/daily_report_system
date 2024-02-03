@@ -38,10 +38,10 @@
                         <td class="report_action"><a href="<c:url value='?action=${actRep}&command=${commShow}&id=${report.id}' />">詳細を見る</a></td>
                         <td class="report_approval">
                             <c:choose>
-                            <c:when test="${report.approvalFlag}=2">差し戻し</c:when>
+                            <c:when test="${report.approvalFlag==2}">差し戻し</c:when>
                             <c:otherwise>
                                 <c:choose>
-                            <c:when test="${report.approvalFlag}=1">承認済み</c:when>
+                            <c:when test="${report.approvalFlag==1}">承認済み</c:when>
                             <c:otherwise>未承認</c:otherwise>
                                 </c:choose>
                             </c:otherwise>

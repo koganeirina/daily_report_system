@@ -52,10 +52,10 @@
                         <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_MANAGER.getIntegerValue()}">
                         <td class="report_approval">
                             <c:choose>
-                            <c:when test="${report.approvalFlag}=2">差し戻し</c:when>
+                            <c:when test="${report.approvalFlag==2}">差し戻し</c:when>
                             <c:otherwise>
                                 <c:choose>
-                            <c:when test="${report.approvalFlag}=1">承認済み</c:when>
+                            <c:when test="${report.approvalFlag==1}">承認済み</c:when>
                             <c:otherwise>未承認</c:otherwise>
                                 </c:choose>
                             </c:otherwise>
