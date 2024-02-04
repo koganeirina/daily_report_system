@@ -80,6 +80,8 @@ public class ReportConverter {
         r.setContent(rv.getContent());
         r.setCreatedAt(rv.getCreatedAt());
         r.setUpdatedAt(rv.getUpdatedAt());
+        r.setApprovalFlag(rv.getApprovalFlag());
+        r.setComment(rv.getComment());
 
     }
 
