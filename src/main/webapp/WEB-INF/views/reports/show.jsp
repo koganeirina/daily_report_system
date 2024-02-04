@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="constants.ForwardConst" %>
+<%@ page import="constants.AttributeConst" %>
 
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
@@ -36,6 +37,22 @@
                     <th>更新日時</th>
                     <fmt:parseDate value="${report.updatedAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="updateDay" type="date" />
                     <td><fmt:formatDate value="${updateDay}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                </tr>
+                <tr>
+                    <th>承認状況</th>
+                    <td><c:choose>
+                    <c:when test="${report.approvalFlag==AttributeConst.REMAND.getIntegerValue()}">差し戻し</c:when>
+                    <c:otherwise>
+                    <c:choose>
+                        <c:when test="${report.approvalFlag==AttributeConst.APPROVED.getIntegerValue()}">承認済み</c:when>
+                        <c:otherwise>未承認</c:otherwise>
+                    </c:choose>
+                    </c:otherwise>
+                    </c:choose></td>
+                </tr>
+                <tr>
+                    <th>コメント</th>
+                    <td><pre><c:out value="${report.comment}"/></pre></td>
                 </tr>
             </tbody>
         </table>
