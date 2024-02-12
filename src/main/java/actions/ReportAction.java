@@ -64,6 +64,7 @@ public class ReportAction extends ActionBase {
         //一覧画面を表示
         forward(ForwardConst.FW_REP_INDEX);
     }
+
     /**
      * 新規登録画面を表示する
      * @throws ServletException
@@ -82,6 +83,7 @@ public class ReportAction extends ActionBase {
         forward(ForwardConst.FW_REP_NEW);
 
     }
+
     /**
      * 新規登録を行う
      * @throws ServletException
@@ -114,8 +116,7 @@ public class ReportAction extends ActionBase {
                     null,
                     null,
                     AttributeConst.UNAPPROVED.getIntegerValue(), //【追記】
-                    null
-                    );
+                    null);
 
             //日報情報登録
             List<String> errors = service.create(rv);
@@ -141,6 +142,7 @@ public class ReportAction extends ActionBase {
             }
         }
     }
+
     /**
      * 詳細画面を表示する
      * @throws ServletException
@@ -163,6 +165,7 @@ public class ReportAction extends ActionBase {
             forward(ForwardConst.FW_REP_SHOW);
         }
     }
+
     /**
      * 編集画面を表示する
      * @throws ServletException
@@ -191,6 +194,7 @@ public class ReportAction extends ActionBase {
         }
 
     }
+
     /**
      * 更新を行う
      * @throws ServletException
@@ -239,90 +243,123 @@ public class ReportAction extends ActionBase {
      * @throws ServletException
      * @throws IOException
      */
-    public void approve() throws ServletException,IOException{
-      //指定されたページ数の一覧画面に表示する未承認日報データを取得
-        int page = getPage();
-        List<ReportView> reports = service.getAllUnapprovedPerPage(page);
+    public void approve() throws ServletException, IOException {
 
-        //未承認日報データの件数を取得
-        long reportsCount = service.countAll();
+        //マネージャーかどうかのチェック
+        if (checkManager()) {
 
-        putRequestScope(AttributeConst.REPORTS, reports); //取得した未承認日報データ
-        putRequestScope(AttributeConst.REP_COUNT, reportsCount); //全ての未承認日報データの件数
-        putRequestScope(AttributeConst.PAGE, page); //ページ数
-        putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
+            //指定されたページ数の一覧画面に表示する未承認日報データを取得
+            int page = getPage();
+            List<ReportView> reports = service.getAllUnapprovedPerPage(page);
 
-        //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
-        String flush = getSessionScope(AttributeConst.FLUSH);
-        if (flush != null) {
-            putRequestScope(AttributeConst.FLUSH, flush);
-            removeSessionScope(AttributeConst.FLUSH);
+            //未承認日報データの件数を取得
+            long reportsCount = service.countAll();
+
+            putRequestScope(AttributeConst.REPORTS, reports); //取得した未承認日報データ
+            putRequestScope(AttributeConst.REP_COUNT, reportsCount); //全ての未承認日報データの件数
+            putRequestScope(AttributeConst.PAGE, page); //ページ数
+            putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
+
+            //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
+            String flush = getSessionScope(AttributeConst.FLUSH);
+            if (flush != null) {
+                putRequestScope(AttributeConst.FLUSH, flush);
+                removeSessionScope(AttributeConst.FLUSH);
+            }
+
+            //未承認日報一覧画面を表示
+            forward(ForwardConst.FW_REP_UNAPPROVED);
         }
-
-        //未承認日報一覧画面を表示
-        forward(ForwardConst.FW_REP_UNAPPROVED);
     }
+
     /**
      * 【追記】未承認日報一覧詳細画面を表示する
      * @throws ServletException
      * @throws IOException
      */
     public void showApprove() throws ServletException, IOException {
+        //マネージャーかどうかのチェック
+        if (checkManager()) {
 
-        //idを条件に日報データを取得する
-        ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+            //idを条件に日報データを取得する
+            ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
-        if (rv == null) {
-            //該当の日報データが存在しない場合はエラー画面を表示
-            forward(ForwardConst.FW_ERR_UNKNOWN);
+            if (rv == null) {
+                //該当の日報データが存在しない場合はエラー画面を表示
+                forward(ForwardConst.FW_ERR_UNKNOWN);
 
-        } else {
-            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-            putRequestScope(AttributeConst.REPORT, rv); //取得した日報データ
+            } else {
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.REPORT, rv); //取得した日報データ
 
-            //詳細画面を表示
-            forward(ForwardConst.FW_REP_SHOW_UNAPPROVED);
+                //詳細画面を表示
+                forward(ForwardConst.FW_REP_SHOW_UNAPPROVED);
+            }
         }
     }
+
     /**
      * 【追記】承認状況、コメントの更新を行う
      * @throws ServletException
      * @throws IOException
      */
     public void updateAppFlag() throws ServletException, IOException {
+        //マネージャーかどうかのチェック
+        if (checkManager()) {
 
-        //CSRF対策 tokenのチェック
-        if (checkToken()) {
+            //CSRF対策 tokenのチェック
+            if (checkToken()) {
 
-            //idを条件に日報データを取得する
-            ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+                //idを条件に日報データを取得する
+                ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
-            //入力された承認状況、コメントを設定する
-            rv.setApprovalFlag(Integer.parseInt(getRequestParam(AttributeConst.REP_APPROVAL_FLAG)));
-            rv.setComment(getRequestParam(AttributeConst.REP_COMMENT));
+                //入力された承認状況、コメントを設定する
+                rv.setApprovalFlag(Integer.parseInt(getRequestParam(AttributeConst.REP_APPROVAL_FLAG)));
+                rv.setComment(getRequestParam(AttributeConst.REP_COMMENT));
 
-            //日報データを更新する
-            List<String> errors = service.update(rv);
+                //日報データを更新する
+                List<String> errors = service.update(rv);
 
-            if (errors.size() > 0) {
-                //更新中にエラーが発生した場合
+                if (errors.size() > 0) {
+                    //更新中にエラーが発生した場合
 
-                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-                putRequestScope(AttributeConst.REPORT, rv); //入力された日報情報
-                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+                    putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                    putRequestScope(AttributeConst.REPORT, rv); //入力された日報情報
+                    putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
 
-                //未承認日報詳細画面を再表示
-                forward(ForwardConst.FW_REP_SHOW_UNAPPROVED);
-            } else {
-                //更新中にエラーがなかった場合
+                    //未承認日報詳細画面を再表示
+                    forward(ForwardConst.FW_REP_SHOW_UNAPPROVED);
+                } else {
+                    //更新中にエラーがなかった場合
 
-                //セッションに更新完了のフラッシュメッセージを設定
-                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+                    //セッションに更新完了のフラッシュメッセージを設定
+                    putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
 
-                //未承認日報一覧画面にリダイレクト
-                redirect(ForwardConst.ACT_REP, ForwardConst.CMD_APPROVE);
+                    //未承認日報一覧画面にリダイレクト
+                    redirect(ForwardConst.ACT_REP, ForwardConst.CMD_APPROVE);
 
+                }
             }
+        }
+    }
+
+    /**
+     * 【追記】ログイン中の従業員がマネージャーかどうかチェックし、マネージャーでなければエラー画面を表示
+     * true: マネージャー false: マネージャーではない
+     * @throws ServletException
+     * @throws IOException
+     */
+    private boolean checkManager() throws ServletException, IOException {
+
+        //セッションからログイン中の従業員情報を取得
+        EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+
+        //マネージャーでなければエラー画面を表示
+        if (ev.getAdminFlag() != AttributeConst.ROLE_MANAGER.getIntegerValue()) {
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+            return false;
+        } else {
+            return true;
         }
     }
 

@@ -14,7 +14,14 @@
 </c:if>
 <fmt:parseDate value="${report.reportDate}" pattern="yyyy-MM-dd" var="reportDay" type="date" />
 <label for="${AttributeConst.REP_DATE.getValue()}">日付</label><br />
-<input type="date" name="${AttributeConst.REP_DATE.getValue()}" id="${AttributeConst.REP_DATE.getValue()}" value="<fmt:formatDate value='${reportDay}' pattern='yyyy-MM-dd' />" />
+<c:choose>
+    <c:when test="${report.approvalFlag==AttributeConst.APPROVED.getIntegerValue()}">
+    <input type="date" name="${AttributeConst.REP_DATE.getValue()}" id="${AttributeConst.REP_DATE.getValue()}" value="<fmt:formatDate value='${reportDay}' pattern='yyyy-MM-dd' />" readonly />
+    </c:when>
+        <c:otherwise>
+        <input type="date" name="${AttributeConst.REP_DATE.getValue()}" id="${AttributeConst.REP_DATE.getValue()}" value="<fmt:formatDate value='${reportDay}' pattern='yyyy-MM-dd' />" />
+        </c:otherwise>
+</c:choose>
 <br /><br />
 
 <label>氏名</label><br />
@@ -22,12 +29,26 @@
 <br /><br />
 
 <label for="${AttributeConst.REP_TITLE.getValue()}">タイトル</label><br />
-<input type="text" name="${AttributeConst.REP_TITLE.getValue()}" id="${AttributeConst.REP_TITLE.getValue()}" value="${report.title}" />
+<c:choose>
+    <c:when test="${report.approvalFlag==AttributeConst.APPROVED.getIntegerValue()}">
+    <input type="text" name="${AttributeConst.REP_TITLE.getValue()}" id="${AttributeConst.REP_TITLE.getValue()}" value="${report.title}" readonly />
+    </c:when>
+        <c:otherwise>
+        <input type="text" name="${AttributeConst.REP_TITLE.getValue()}" id="${AttributeConst.REP_TITLE.getValue()}" value="${report.title}" />
+        </c:otherwise>
+</c:choose>
 <br /><br />
 
 <label for="${AttributeConst.REP_CONTENT.getValue()}">内容</label><br />
-<textarea  name="${AttributeConst.REP_CONTENT.getValue()}" id="${AttributeConst.REP_CONTENT.getValue()}" rows="10" cols="50">${report.content}</textarea>
-<br /><br />
+<c:choose>
+    <c:when test="${report.approvalFlag==AttributeConst.APPROVED.getIntegerValue()}">
+    <textarea  name="${AttributeConst.REP_CONTENT.getValue()}" id="${AttributeConst.REP_CONTENT.getValue()}" rows="10" cols="50" readonly>${report.content}</textarea>
+    </c:when>
+        <c:otherwise>
+        <textarea  name="${AttributeConst.REP_CONTENT.getValue()}" id="${AttributeConst.REP_CONTENT.getValue()}" rows="10" cols="50">${report.content}</textarea>
+        <br /><br />
 <input type="hidden" name="${AttributeConst.REP_ID.getValue()}" value="${report.id}" />
 <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
 <button type="submit">投稿</button>
+        </c:otherwise>
+</c:choose>
