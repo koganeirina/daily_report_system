@@ -158,13 +158,23 @@ public class ReportService extends ServiceBase {
      * @param page ページ数
      * @return 一覧画面に表示する未承認データのリスト
      */
-    public List<ReportView> getAllUnapprovedPerPage(int page) {
+    public List<ReportView> getUnappPerPage(int page) {
 
         List<Report> reports = em.createNamedQuery(JpaConst.Q_REP_GET_ALL_UNAPPROVED, Report.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
         return ReportConverter.toViewList(reports);
+    }
+
+    /**
+     * 【追記】未承認日報テーブルのデータの件数を取得し、返却する
+     * @return データの件数
+     */
+    public long countUnapp() {
+        long reports_count = (long) em.createNamedQuery(JpaConst.Q_REP_COUNT_ALL_UNAPPROVED, Long.class)
+                .getSingleResult();
+        return reports_count;
     }
 
 }

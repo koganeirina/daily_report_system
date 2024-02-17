@@ -214,6 +214,7 @@ public class ReportAction extends ActionBase {
             rv.setContent(getRequestParam(AttributeConst.REP_CONTENT));
 
             //日報データを更新する
+            rv.setApprovalFlag(AttributeConst.UNAPPROVED.getIntegerValue());
             List<String> errors = service.update(rv);
 
             if (errors.size() > 0) {
@@ -250,10 +251,10 @@ public class ReportAction extends ActionBase {
 
             //指定されたページ数の一覧画面に表示する未承認日報データを取得
             int page = getPage();
-            List<ReportView> reports = service.getAllUnapprovedPerPage(page);
+            List<ReportView> reports = service.getUnappPerPage(page);
 
             //未承認日報データの件数を取得
-            long reportsCount = service.countAll();
+            long reportsCount = service.countUnapp();
 
             putRequestScope(AttributeConst.REPORTS, reports); //取得した未承認日報データ
             putRequestScope(AttributeConst.REP_COUNT, reportsCount); //全ての未承認日報データの件数
