@@ -7,6 +7,7 @@
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}"/>
 <c:set var="commIdx" value="${ ForwardConst.CMD_INDEX.getValue()}"/>
 <c:set var="commShowApp" value="${ForwardConst.CMD_SHOW_APPROVE.getValue()}"/>
+<c:set var="commApp" value="${ ForwardConst.CMD_APPROVE.getValue()}"/>
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -66,7 +67,7 @@
                     </c:when>
 
                     <c:otherwise>
-                        <a href="<c:url value='?action=${actRep}&command=${commIdx}&page=${i}'/>"><c:out value="${i}"/></a>&nbsp;
+                        <a href="<c:url value='?action=${actRep}&command=${commApp}&page=${i}'/>"><c:out value="${i}"/></a>&nbsp;
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
